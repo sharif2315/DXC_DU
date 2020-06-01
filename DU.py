@@ -1,33 +1,53 @@
 import os
+import pyodbc
 
-class Scan:
-    def __init__(self, path, DU_FileCount, DU_FileSize, Scan_FileCount, Scan_FileSize):
+conn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+                      "Server=GBPF0Y89C1\\SQLEXPRESS;"
+                      "Database=Miradors;"
+                      "Trusted_Connection=yes;")
+cursor = conn.cursor()
+
+class DU:
+    def __init__(self, path, DU_FileCount, DU_FileSize):
         self.path = path
         self.DU_FileCount = DU_FileCount
         self.DU_FileSize = DU_FileSize
-        self.Scan_FileCount = Scan_FileCount
-        self.Scan_FileSize = Scan_FileSize
 
-    def runDU(self):
+    def runDiskUsage(self):
+        # conn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+        #                       "Server=GBPF0Y89C1\\SQLEXPRESS;"
+        #                       "Database=Miradors;"
+        #                       "Trusted_Connection=yes;")
+        cursor = conn.cursor()
         total_size = 0
         total_count = 0
         for dirpath, dirnames, filenames in os.walk(self.path):
-            for f in filenames:
-                fp = os.path.join(dirpath, f)
+            for filename in filenames:
+                fp = os.path.join(dirpath, filename)
                 # skip if it is symbolic link
                 if not os.path.islink(fp):
                     self.DU_FileSize += os.path.getsize(fp)
                     self.DU_FileCount += 1
+        updQry = 'INSERT INTO [Miradors].[dbo].[NewRepostatus] (DrivePath, NumberOfFiles, SizeOfFiles)' + ' VALUES(' + "'" + str(self.path) + "'" + ',' + str(self.DU_FileCount) + ',' + str(round(self.DU_FileSize/1024/1024,2)) + ')'
+        # print(updQry)
+        cursor.execute(updQry)
+        conn.commit()
+        # cursor.close()
+        # conn.close()
 
-    def ReportDU(self):
-        print('DU Report')
-        print('Path: ' + str(self.path))
-        print('Total File Count: ' + str(self.DU_FileCount))
-        print('Total File Size: ' + str(round(self.DU_FileSize/1024/1024,2)) + 'MB')
 
+curJobQry = 'SELECT TOP 1 * FROM [Miradors].[dbo].[NewCurrentJobs]'
+cursor.execute(curJobQry)
 
-dir1 = Scan(r'C:\Users\sahmed243\Downloads\bootstrap-4.3.1',0 ,0 ,0 ,0)
-dir1.runDU()
-dir1.ReportDU()
-#print(dir1.DU_FileCount)
-#print(dir1.DU_FileSize)
+for row in cursor:
+    jobid = path = row.PathID
+    jobpath = row.Path
+
+firstpath = DU(jobpath, 0, 0)
+firstpath.runDiskUsage()
+deleteJobQry = "delete from [Miradors].[dbo].[NewCurrentJobs] WHERE PathID = " + str(jobid)
+# print(deleteJobQry)
+cursor.execute(deleteJobQry)
+conn.commit()
+cursor.close()
+conn.close()
