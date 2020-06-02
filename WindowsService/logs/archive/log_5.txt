@@ -1,0 +1,1 @@
+[Errno 17] File exists: 'C:\\Users\\sahmed243\\Documents\\WebDevelopment\\Python\\Scripts\\DU_Github\\DXC_DU\\WindowsService\\logs\\logTwo.txt'
