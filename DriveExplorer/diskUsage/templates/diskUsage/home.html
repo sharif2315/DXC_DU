@@ -1,0 +1,23 @@
+{% extends "diskUsage/base/base.html" %}
+
+{% block content %}
+  <div class="container">
+    <h1>Repo Status Page</h1>
+  </div>
+  <div class="container pt-3">
+    <table class="table table-bordered table-striped">
+      <tr class="bg-secondary text-light">
+        <th>Drive Path</th>
+        <th>Num Of Files</th>
+        <th>Size Of Files</th>
+      {% for drive in drives %}
+      <tr>
+        <td>{{ drive.drivePath }}</td>
+        <td>{{ drive.numOfFiles }}</td>
+        <td>{{ drive.sizeOfFiles }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+{% endblock %}

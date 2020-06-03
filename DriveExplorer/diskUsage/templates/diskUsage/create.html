@@ -1,0 +1,38 @@
+{% extends "diskUsage/base/base.html" %}
+<!-- {% load crispy_forms_tags %} -->
+{% block content %}
+
+    <div class="container">
+      <h1>Add Drive</h1>
+    </div>
+
+    <div class="container">
+      <form class="form" method="POST" action="/">
+        {% csrf_token %}
+        <div class=" form-group">
+          <label>Drive Path</label>
+          {{ form.drivePath }}
+        </div>
+        <div class="form-group">
+          <label>Number of files</label>
+          {{ form.numOfFiles }}
+        </div>
+        <div class="form-group">
+          <label>Size of files</label>
+          {{ form.sizeOfFiles }}
+        </div>
+        <br>
+        <input class="btn btn-info" type="submit" name="Add Drive">
+      </form>
+
+    <!-- <div class="container">
+      <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+          {{ form|crispy }}
+        </fieldset>
+      </form>
+      <button class="btn btn-info" type="submit">Create</button>
+    </div> -->
+
+{% endblock %}
