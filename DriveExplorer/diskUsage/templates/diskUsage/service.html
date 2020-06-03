@@ -1,0 +1,24 @@
+{% extends "diskUsage/base/base.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>Admin Page</h1>
+  </div>
+  <table class="table">
+    <tr>
+      <th>Service Status</th>
+    </tr>
+    {% for cmd in mylist %}
+    <tr>
+      <td>{{ cmd.status }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <a href="/service/0" class="btn btn-secondary">Refresh</a>
+  <a href="/service/1" class="btn btn-secondary">Start</a>
+  <a href="/service/2" class="btn btn-secondary">Stop</a>
+
+
+
+{% endblock %}

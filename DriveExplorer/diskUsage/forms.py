@@ -11,7 +11,7 @@ from .models import *
 class DriveForm(forms.ModelForm):
 
     class Meta:
-        model = RepoStatus
+        model = CurrentJobs
         fields = '__all__'
 
 # class DataForm(forms.Form):

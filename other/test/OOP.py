@@ -23,6 +23,7 @@ dir1 = Scan(r'C:\Temp',0 ,0 ,0 ,0)
 
 #print(dir1.runDU())
 
-dir1.runDU()
+# dir1.runDU()
 
-print(dir1.DU_FileCount)
+# print(dir1.DU_FileCount)
+print(Scan)
