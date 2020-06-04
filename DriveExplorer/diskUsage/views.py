@@ -3,23 +3,16 @@ from .models import *
 from .forms import *
 import subprocess
 import openpyxl
+import pandas as pd
+
 
 # Create your views here.
 def home(request):
     drives = RepoStatus.objects.all()
-    # form = DriveForm()
-    # print(drives)
-    # if request.method == 'POST':
-    #     form = DriveForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #     return redirect('/')
-
-    # context = { 'drives': drives, 'form': form }
-    print(drives.values())
+    # print(drives.values())
     context = { 'drives': drives }
     return render(request, 'diskUsage/home.html', context)
-    # return render(request, 'diskUsage/home2.html', context)
+
 
 def create(request):
     form = DriveForm()
@@ -27,37 +20,17 @@ def create(request):
     return render(request, 'diskUsage/create.html', context)
 
 def service(request, id=0):
-    if id == '1':
-        pspath = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
-        subprocess.getoutput(pspath + ' Start-Service -Name PythonDU')
-        output = subprocess.getoutput(pspath + ' Get-Service PythonDU').split()[6]
-        mylist = []
-        mydict = {}
-        mydict['status'] = output
-        mylist.append(mydict)
-        context = {'mylist': mylist}
-        return render(request, 'diskUsage/service.html', context)
-
-    elif id == '2':
-        pspath = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
-        subprocess.getoutput(pspath + ' Stop-Service -Name PythonDU')
-        output = subprocess.getoutput(pspath + ' Get-Service PythonDU').split()[6]
-        mylist = []
-        mydict = {}
-        mydict['status'] = output
-        mylist.append(mydict)
-        context = {'mylist': mylist}
-        return render(request, 'diskUsage/service.html', context)
-
-    else:
-        pspath = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
-        output = subprocess.getoutput(pspath + ' Get-Service PythonDU').split()[6]
-        mylist = []
-        mydict = {}
-        mydict['status'] = output
-        mylist.append(mydict)
-        context = {'mylist': mylist}
-        return render(request, 'diskUsage/service.html', context)
+    pspath = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    mylist = []
+    mydict = {}
+    serviceMap = {'1': 'Start-Service', '2': 'Stop-Service'}
+    service = serviceMap.get(str(id), 'Get-Service')
+    subprocess.getoutput(f'pspath {service} -Name PythonDU')
+    output = subprocess.getoutput(pspath + ' Get-Service PythonDU').split()[6]
+    mydict['status'] = output
+    mylist.append(mydict)
+    context = {'mylist': mylist}
+    return render(request, 'diskUsage/service.html', context)
 
 def upload(request):
     if "GET" == request.method:
