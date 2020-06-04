@@ -7,15 +7,17 @@ import openpyxl
 # Create your views here.
 def home(request):
     drives = RepoStatus.objects.all()
-    form = DriveForm()
-    print(drives)
-    if request.method == 'POST':
-        form = DriveForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('/')
+    # form = DriveForm()
+    # print(drives)
+    # if request.method == 'POST':
+    #     form = DriveForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     return redirect('/')
 
-    context = { 'drives': drives, 'form': form }
+    # context = { 'drives': drives, 'form': form }
+    print(drives.values())
+    context = { 'drives': drives }
     return render(request, 'diskUsage/home.html', context)
     # return render(request, 'diskUsage/home2.html', context)
 

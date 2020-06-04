@@ -3,7 +3,7 @@
 {% block content %}
 
   <div class="container">
-    <h1>Admin Page</h1>
+    <h1>Admin</h1>
   </div>
   <table class="table">
     <tr>
@@ -11,13 +11,20 @@
     </tr>
     {% for cmd in mylist %}
     <tr>
-      <td>{{ cmd.status }}</td>
+      <td>
+        {{ cmd.status }}
+      </td>
+      <td>
+        <a href="{% url 'service' 0 %}" class="px-5 btn btn-primary">Refresh</a>
+        <a href="{% url 'service' 1 %}" class="px-5 btn btn-success">Start</a>
+        <a href="{% url 'service' 2 %}" class="px-5 btn btn-danger">Stop</a>
+      </td>
     </tr>
     {% endfor %}
   </table>
-  <a href="{% url 'service' 0 %}" class="btn btn-secondary">Refresh</a>
-  <a href="{% url 'service' 1 %}" class="btn btn-secondary">Start</a>
-  <a href="{% url 'service' 2 %}" class="btn btn-secondary">Stop</a>
+
+
+
 
 
 

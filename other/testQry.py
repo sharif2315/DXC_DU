@@ -1,25 +1,24 @@
-# total_count = 100
-# total_size = 150
-# print('INSERT INTO [Miradors].[dbo].[NewRepostatus] (NumberOfFiles, SizeOfFiles)' + ' VALUES(' + str(total_count) + ',' + str(total_size) + ')')
-
-# import pyodbc
-# pyodbc.drivers()
-
-# import subprocess
-#
-#
-# pspath = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
-# # output = subprocess.getoutput(pspath + ' Get-Service PythonDU').split()[6]
-# # output = subprocess.getoutput(pspath + ' Stop-Service -Name PythonDU')
-# output = subprocess.getoutput(pspath + ' Start-Service -Name PythonDU')
-# print(output)
 
 
+import pandas as pd
+import openpyxl
 
+qs = [
+    {'id': 1, 'drivePath': 'C:\\temp', 'numOfFiles': 100, 'sizeOfFiles': 50},
+    {'id': 2, 'drivePath': 'D:\\dir1', 'numOfFiles': 1000, 'sizeOfFiles': 1500},
+    {'id': 3, 'drivePath': 'C:\\Users\\sahmed243\\Downloads\\CpMiradors\\heartbeatReportTesting', 'numOfFiles': 836, 'sizeOfFiles': 152},
+    {'id': 4, 'drivePath': 'C:\\Temp\\MonitoringTables', 'numOfFiles': 3, 'sizeOfFiles': 0},
+    {'id': 5, 'drivePath': 'C:\\Temp\\mydocs\\pdfs', 'numOfFiles': 9, 'sizeOfFiles': 0},
+    {'id': 6, 'drivePath': 'C:\\Temp\\mydocs', 'numOfFiles': 18, 'sizeOfFiles': 0},
+    {'id': 7, 'drivePath': 'C:\\Temp\\MonitoringTables', 'numOfFiles': 3, 'sizeOfFiles': 0},
+    {'id': 8, 'drivePath': 'C:\\Temp\\mydocs\\pdfs', 'numOfFiles': 9, 'sizeOfFiles': 0},
+    {'id': 9, 'drivePath': 'C:\\Temp\\mydocs', 'numOfFiles': 18, 'sizeOfFiles': 0},
+    {'id': 10, 'drivePath': 'C:\\Temp\\MonitoringTables', 'numOfFiles': 3, 'sizeOfFiles': 0}
+]
 
-
-name = 'Sheet1'
-worksheet = list()
-worksheet.append(name)
-
-print('Path'.lower())
+df = pd.DataFrame(qs)
+# print(df)
+del df['id']
+writer = pd.ExcelWriter('C:\\temp\\Report.xlsx')
+df.to_excel(writer, 'Sheet1', index=False)
+writer.save()
