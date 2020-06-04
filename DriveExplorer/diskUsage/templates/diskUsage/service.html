@@ -15,9 +15,9 @@
     </tr>
     {% endfor %}
   </table>
-  <a href="/service/0" class="btn btn-secondary">Refresh</a>
-  <a href="/service/1" class="btn btn-secondary">Start</a>
-  <a href="/service/2" class="btn btn-secondary">Stop</a>
+  <a href="{% url 'service' 0 %}" class="btn btn-secondary">Refresh</a>
+  <a href="{% url 'service' 1 %}" class="btn btn-secondary">Start</a>
+  <a href="{% url 'service' 2 %}" class="btn btn-secondary">Stop</a>
 
 
 

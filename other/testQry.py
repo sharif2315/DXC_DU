@@ -5,22 +5,21 @@
 # import pyodbc
 # pyodbc.drivers()
 
-import subprocess
-
-
-pspath = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
-# output = subprocess.getoutput(pspath + ' Get-Service PythonDU').split()[6]
-# output = subprocess.getoutput(pspath + ' Stop-Service -Name PythonDU')
-output = subprocess.getoutput(pspath + ' Start-Service -Name PythonDU')
-print(output)
-
-
-
-# mylist = []
-# mydict = {}
+# import subprocess
 #
-# mydict['status'] = output
-# print(mydict)
 #
-# mylist.append(mydict)
-# print(mydict)
+# pspath = r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+# # output = subprocess.getoutput(pspath + ' Get-Service PythonDU').split()[6]
+# # output = subprocess.getoutput(pspath + ' Stop-Service -Name PythonDU')
+# output = subprocess.getoutput(pspath + ' Start-Service -Name PythonDU')
+# print(output)
+
+
+
+
+
+name = 'Sheet1'
+worksheet = list()
+worksheet.append(name)
+
+print('Path'.lower())
