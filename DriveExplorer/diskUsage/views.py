@@ -1,18 +1,17 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from .models import *
 from .forms import *
 import subprocess
 import openpyxl
-import pandas as pd
+
 
 
 # Create your views here.
 def home(request):
     drives = RepoStatus.objects.all()
-    # print(drives.values())
     context = { 'drives': drives }
     return render(request, 'diskUsage/home.html', context)
-
 
 def create(request):
     form = DriveForm()

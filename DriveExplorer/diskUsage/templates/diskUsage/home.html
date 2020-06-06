@@ -1,11 +1,18 @@
 {% extends "diskUsage/base/base.html" %}
 
 {% block content %}
+
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+  {{ message }}
+</div>
+{% endfor %}
+
   <div class="container">
     <h1>Repo Status Page</h1>
   </div>
   <div class="container pt-3">
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" id="mytable">
       <tr class="bg-secondary text-light">
         <th>Drive Path</th>
         <th>Num Of Files</th>
@@ -17,9 +24,22 @@
         <td>{{ drive.sizeOfFiles }}</td>
       </tr>
       {% endfor %}
-
     </table>
-
+    <button class="btn btn-success" id="button-a">Excel Export</button>
   </div>
+  <script>
+    var wb = XLSX.utils.table_to_book(document.getElementById('mytable'), {sheet:"Sheet JS"});
+    var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
+    function s2ab(s) {
+
+                    var buf = new ArrayBuffer(s.length);
+                    var view = new Uint8Array(buf);
+                    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+    }
+    $("#button-a").click(function(){
+    saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'test.xlsx');
+    });
+  </script>
 
 {% endblock %}
